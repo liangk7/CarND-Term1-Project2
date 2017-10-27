@@ -22,7 +22,7 @@ The goals / steps of this project are the following:
 [image4]: ./images/results_Step1_classHistoNew.png "Image New Histogram"
 [image5]: ./images/results_Step2_imgPreprocess.png "Image Preprocess"
 [image6]: ./images/figure_model_LeNet.png "LeNet Architecture"
-[image7]: ./images/figure_modle_LeNet2.png "Modified LeNet Architecture"
+[image7]: ./images/figure_model_LeNet2.png "Modified LeNet Architecture"
 [image8]: ./images/inputs_Step3_imgSamples.png "Test Images"
 [image9]: ./images/results_Step3_Softmax.png "Test Images Softmax"
 
@@ -41,8 +41,10 @@ This is the writeup for my Udacity Self-Driving Car Nanodegree Term 1 [Project 2
 
 #### Dataset Summary
 Data is provided for *training* and *testing*. Although *validation* data is also provided, it is not usable for this project. Therefore we must partition the *training* set into both *training* and *validation* data sets.
+
 **Step 1:** Load the data
 - `pickle.load` is used to import the data
+
 **Step 2:** Summarize the dataset shapes and their classifications
 - `numpy.ndarray.shape` is used to determine data properties
 	* Number of training examples = 34799
@@ -52,10 +54,12 @@ Data is provided for *training* and *testing*. Although *validation* data is als
 
 #### Exploratory Visualization
 With an understanding of the data shapes and classifications, we can visualize the distribution of images per class.
+
 **Step 1:** Show a sample image from each of the classes
 - `numpy.genfromtxt` is used to get the sign class names from the provided *signnames.csv* file
 - `matplotlib.subplots` is used to visualize grouped subplots of the class image samples
 ![alt text][image1]
+
 **Step 2:** Plot a histogram to depict the distribution of the images classes
 - `matplotlib.hist` is used to generate a histogram of the training dataset
 ![alt text][image2]
@@ -111,6 +115,7 @@ Preprocessing steps of the images include:
 - `normalization` is used to adjust the values ((x - mu)/stdev) to prevent the propagation of error in the model calculations
 - 'preProcess' uses the above functions to process an array of images for model training and prediction evaluation
 	![alt text][image5]
+
 Note: I moved this to preclude image transform to reduce the storage cost.
 
 #### Model Architecture
