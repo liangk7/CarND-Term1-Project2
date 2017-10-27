@@ -1,4 +1,4 @@
-#**Traffic Sign Recognition**
+# **Traffic Sign Recognition**
 
 ---
 
@@ -26,20 +26,20 @@ The goals / steps of this project are the following:
 [image8]: ./images/inputs_Step3_imgSamples.png "Test Images"
 [image9]: ./images/results_Step3_Softmax.png "Test Images Softmax"
 
-####Sources
+#### Sources
 "LeNet Architecture": ResearchGate (https://www.researchgate.net/figure/282997080_fig10_Figure-10-Architecture-of-LeNet-5-one-of-the-first-initial-architectures-of-CNN)
 
 ---
 
-##Writeup / README
+## Writeup / README
 
 This is the writeup for my Udacity Self-Driving Car Nanodegree Term 1 [Project 2 submission](https://github.com/liangk7/CarND-Term1-Project2/blob/master/Traffic_Sign_Classifier.ipynb) in accordance with the [rubric guidelines](https://review.udacity.com/#!/rubrics/481/view)
 
 ---
 
-###Dataset Exploration
+### Dataset Exploration
 
-####Dataset Summary
+#### Dataset Summary
 Data is provided for *training* and *testing*. Although *validation* data is also provided, it is not usable for this project. Therefore we must partition the *training* set into both *training* and *validation* data sets.
 **Step 1:** Load the data
 - `pickle.load` is used to import the data
@@ -50,7 +50,7 @@ Data is provided for *training* and *testing*. Although *validation* data is als
 	* Image data shape = (32, 32, 3)
 	* Number of classes = 43
 
-####Exploratory Visualization
+#### Exploratory Visualization
 With an understanding of the data shapes and classifications, we can visualize the distribution of images per class.
 **Step 1:** Show a sample image from each of the classes
 - `numpy.genfromtxt` is used to get the sign class names from the provided *signnames.csv* file
@@ -60,7 +60,7 @@ With an understanding of the data shapes and classifications, we can visualize t
 - `matplotlib.hist` is used to generate a histogram of the training dataset
 ![alt text][image2]
 
-####Data Generation
+#### Data Generation
 From the visualization of the data, we can determine whether or not our dataset contains enough samples to properly train the classification model. In the case that the distribution of our classes is skewed, we can replicate our existing data pool and generate new data using various image processing techniques. 
 *NOTE:* one may desire to partition the data into *training* and *validation* sets prior to data generation in order to prevent data spilling (training the model to images similar to validation data).
 
@@ -96,14 +96,14 @@ From the visualization of the data, we can determine whether or not our dataset 
 - `matplotlib.hist` is used again to show the new distribution of class images
 	![alt text][image4]
 
-####Sources
+#### Sources
 Transformations: OpenCV-Python Tutorials (http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_geometric_transformations/py_geometric_transformations.html)
 
 ---
 
-###Design and Test a Model Architecture
+### Design and Test a Model Architecture
 
-####Preprocessing
+#### Preprocessing
 This step is important for multiple reasons. Firstly, it serves as a method to filter out unnecessary noise in the images (hue, saturation, lighting, damage, etc.). Secondly, it reduces the number or parameters that the model would otherwise need to retain. Thirdly, a consistent processing method allows more flexibility in the type and quality of data that is gathered.
 Preprocessing steps of the images include:
 - `equalization` is used to spread out the exposure of an image more evenly, occupying 0 to 255 (min to max) values
@@ -113,7 +113,7 @@ Preprocessing steps of the images include:
 	![alt text][image5]
 Note: I moved this to preclude image transform to reduce the storage cost.
 
-####Model Architecture
+#### Model Architecture
 For an image classifier neural network, practice has demonstrated convolutional filters to be paramount in producing accurate results. Convolutional filters generally enhance important features in an image. Accompanying these convolutional filters are rectifier (ReLU) and pooling (max pool) operations. By nulling unimportant image features, this set of operations (used in repeated succession) is commonly employed to produce more distinguishable feature sets. However, this level of accuracy comes with the compromise of memory and processing speed. 
 - First Implementation: LeNet
 	![alt text][image6]
@@ -159,7 +159,7 @@ For an image classifier neural network, practice has demonstrated convolutional 
 	|  Dropout			|  Keep Probability = 0.5		|
 	|  Fully Connected	|  outputs 	43					|
 
-####Model Training
+#### Model Training
 - Choosing global parameters: `EPOCH`, `batch_size`, `learning rate`
 	* the increase of the `EPOCH` parameter generally correlates with the increase in model accuracy (assuming reasonable learning rate), but requires much more computational power (and thus, time) to fully develop. I settled on an `EPOCH` value of `30` based on previous runs of the model
 	* `batch_size` was at `128` by default, but I chose a lower value of `100` since it yielded a higher accuracy
@@ -181,9 +181,9 @@ For an image classifier neural network, practice has demonstrated convolutional 
 
 ---
 
-###Test a Model on New Images
+### Test a Model on New Images
 
-####Acquiring New Images
+#### Acquiring New Images
 Samples images were acquired from the internet. The sample pool is meant to reflect a variety of sign shapes, angles, colors, and content:
 	![alt text][image8]
 - sample for class 3 - Speed limit (60km/h)
@@ -192,26 +192,26 @@ Samples images were acquired from the internet. The sample pool is meant to refl
 - sample for class 25 - Road Work
 - sample for class 36 - Go straight or right
 
-####Performance on New Images
+#### Performance on New Images
 The overall performance of the model yielded an accuracy of `0.8` for this set of images. The hiccup occurred with the image for class 3, which may have been due to the poor image arrangement.
 Upon this discovery, I decided to generate a cropped version of the same image and check if results would improve. However, they did not. 
 
-####Model Certainty - Softmax Probabilities
+#### Model Certainty - Softmax Probabilities
 Running the samples images from the internet yielded the following Softmax Probabilities. With the sample image for class 3 showing strange results, it may serve as a useful example to postulate potential flaws in the model.
 	![alt text][image9]
 
 ---
 
-###Future Implementation
+### Future Implementation
 
-####Preprocessing
+#### Preprocessing
 Based on the nature of our model, it seems that there is much to be gained from enhancing the image preprocessing techniques. Some improvements may include:
 - image centering (offset and perspective)
 - shape recognition and refining
 - character and symbol recognition and enhancing
 While these preprocessing techniques may increase the overhead cost of the model, it may serve to provide a more reliable means of homogenizing the images - especially with the prevalence sign wear or defacement.
 
-####Modeling
+#### Modeling
 Due to the fact that computation costs play a major role in determining the workflow timeshare split of projects, it is pertinent that the architecture of a model is developed using inferences made from higher level model design. For example, by using the softmax probability visualization we can determine certain conditions (or patterns) where the model has low confidence. Another example would be to use the feature map visualizations to understand how to tweak convolution layer parameters.
 
 ---
